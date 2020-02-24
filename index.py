@@ -9,7 +9,8 @@ UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'static/uploads/')
 ALLOWED_EXTENSIONS = set(['txt'])
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
+# limited the maximum allowed payload to 5 megabytes.
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 def allowed_file(filename): 
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
