@@ -46,3 +46,7 @@ def uploaded_file(filename):
 @app.route("/about")
 def about():
     return render_template('about.html')
+
+@app.errorhandler(404) 
+def not_found(error):
+    return render_template('error.html'), 404
