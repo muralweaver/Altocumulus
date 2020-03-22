@@ -5,7 +5,6 @@ from flask import Flask, flash, render_template, request, redirect, url_for, sen
 from werkzeug.utils import secure_filename
 from os.path import join, dirname, realpath
 from sentry_sdk.integrations.flask import FlaskIntegration
-from sentry_sdk import configure_scope
 
 # To configure the SDK, initialize it with the integration before or after your app has been initialized:
 sentry_sdk.init(
