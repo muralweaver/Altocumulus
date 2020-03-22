@@ -5,10 +5,11 @@
 {% block content %}
 <div class="callout">
   <h4><strong>ALTOCUMULUS</strong></h4>
-  <p>is a toy for generating “word clouds” from text that you provide. The clouds give greater prominence to words that appear more frequently in the source text.</p>
+  <p>A tool for generating “word clouds” from text that you provide. The clouds give greater prominence to words that appear more frequently in the source text.</p>
 <form method=post enctype=multipart/form-data>
-      <input type=file id="fileUpload" name=file>
-      <input type=submit value=Upload class="button">
+      <label for="fileUpload" class="label" style="margin: 1em;">.txt only</label>
+      <input type=file id="fileUpload" name=file required>
+      <input type=submit value=Upload class="button expanded">
 </form>
 </div>
 
