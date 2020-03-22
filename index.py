@@ -4,7 +4,6 @@ import feedparser
 import requests
 import io
 import sentry_sdk
-import app as app
 from wordcloud import WordCloud
 from flask import Flask, flash, render_template, request, redirect, url_for, send_from_directory, make_response
 from werkzeug.utils import secure_filename
