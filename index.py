@@ -1,9 +1,15 @@
 import os
-import app as app
+import base64
+import feedparser
+import requests
+import io
 import sentry_sdk
-from flask import Flask, flash, render_template, request, redirect, url_for, send_from_directory
+import app as app
+from wordcloud import WordCloud
+from flask import Flask, flash, render_template, request, redirect, url_for, send_from_directory, make_response
 from werkzeug.utils import secure_filename
 from os.path import join, dirname, realpath
+from bs4 import BeautifulSoup
 from sentry_sdk.integrations.flask import FlaskIntegration
 
 # To configure the SDK, initialize it with the integration before or after your app has been initialized:
@@ -21,14 +27,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 
-def allowed_file(filename): 
+def allowed_file(filename):
     return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-@app.route("/hello")
-def hello():
-    return "Hello, World!"
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -51,7 +52,7 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/uploads/<filename>') 
+@app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
@@ -59,8 +60,67 @@ def uploaded_file(filename):
 @app.route("/about")
 def about():
     return render_template('about.html')
+    
+def parse_article(article_url):
+    print("Downloading {}".format(article_url))
+    r = requests.get(article_url)
+    soup = BeautifulSoup(r.text, "html.parser")
+    ps = soup.find_all('p')
+    text = "\n".join(p.get_text() for p in ps)
+    return text
+
+@app.route("/feed")
+def feed():
+    BBC_FEED = "http://feeds.bbci.co.uk/news/world/rss.xml"
+    LIMIT = 1
+    feed = feedparser.parse(BBC_FEED)
+    clouds = []
+    for article in feed['entries'][:LIMIT]:
+        text = parse_article(article['link'])
+        cloud = get_wordcloud(text)
+        clouds.append(cloud)
+    return render_template('generate.html', articles=clouds)
 
 
-@app.errorhandler(404) 
+@app.route("/simple.png")
+def testMatPlot():
+    import datetime
+    import io
+    import random
+
+    from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+    from matplotlib.figure import Figure
+    from matplotlib.dates import DateFormatter
+
+    fig = Figure()
+    ax = fig.add_subplot(131)
+    x = []
+    y = []
+    now = datetime.datetime.now()
+    delta = datetime.timedelta(days=1)
+    for i in range(11):
+        x.append(now)
+        now += delta
+        y.append(random.randint(0, 1000))
+    ax.plot_date(x, y, '-')
+    ax.xaxis.set_major_formatter(DateFormatter('%Y-%m-%d'))
+    fig.autofmt_xdate()
+    canvas = FigureCanvas(fig)
+    png_output = io.BytesIO()
+    canvas.print_png(png_output)
+    response = make_response(png_output.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+    return response
+
+def get_wordcloud(text):
+    pil_img = WordCloud().generate(text=text).to_image()
+    img = io.BytesIO()
+    pil_img.save(img, "PNG")
+    img.seek(0)
+    img_b64 = base64.b64encode(img.getvalue()).decode()
+    return img_b64
+
+
+@app.errorhandler(404)
 def not_found(error):
     return render_template('error.html'), 404
