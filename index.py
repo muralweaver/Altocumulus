@@ -45,14 +45,20 @@ def home():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
+            print(file)
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # print((app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
+            # return(url_for('content',filename =filename))
     return render_template('index.html')
 
-
+ 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
+    text = '/uploads/{file}'.format(file = filename), 'r+'
+    content = text[0].read()
+    print(content)
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
@@ -60,6 +66,7 @@ def uploaded_file(filename):
 def about():
     return render_template('about.html')
     
+
 def parse_article(article_url):
     print("Downloading {}".format(article_url))
     r = requests.get(article_url)
@@ -68,11 +75,44 @@ def parse_article(article_url):
     text = "\n".join(p.get_text() for p in ps)
     return text
 
-@app.route("/feed")
-def feed():
-    BBC_FEED = "http://feeds.bbci.co.uk/news/world/rss.xml"
-    LIMIT = 1
-    feed = feedparser.parse(BBC_FEED)
+
+#REFACTOR INTO ONE
+@app.route("/ewn")
+def ewn():
+    FEED = "https://ewn.co.za/RSS%20Feeds/Latest%20News?category=Local"
+    # FEED = input
+    LIMIT = 6
+    feed = feedparser.parse(FEED)
+    clouds = []
+    for article in feed['entries'][:LIMIT]:
+        text = parse_article(article['link'])
+        cloud = get_wordcloud(text)
+        clouds.append(cloud)
+    return render_template('generate.html', articles=clouds)
+
+
+#REFACTOR INTO ONE
+@app.route("/news24")
+def news24():
+    FEED = "http://feeds.news24.com/articles/News24/TopStories/rss"
+    # FEED = input
+    LIMIT = 6
+    feed = feedparser.parse(FEED)
+    clouds = []
+    for article in feed['entries'][:LIMIT]:
+        text = parse_article(article['link'])
+        cloud = get_wordcloud(text)
+        clouds.append(cloud)
+    return render_template('generate.html', articles=clouds)
+
+
+#REFACTOR INTO ONE
+@app.route("/bbc")
+def bbc():
+    FEED = "http://feeds.bbci.co.uk/news/world/rss.xml"
+    # FEED = input
+    LIMIT = 6
+    feed = feedparser.parse(FEED)
     clouds = []
     for article in feed['entries'][:LIMIT]:
         text = parse_article(article['link'])
