@@ -3,15 +3,20 @@
 {{ super() }}
 {% endblock %}
 {% block content %}
-<div class="callout">
-  <h4><strong>ALTOCUMULUS</strong></h4>
-  <p>A tool for generating “word clouds” from text that you provide. The clouds give greater prominence to words that appear more frequently in the source text.</p>
-<form method=post enctype=multipart/form-data>
-      <label for="fileUpload" class="label" style="margin: 1em;">.txt only</label>
-      <input type=file id="fileUpload" name=file required>
-      <input type=submit value=Upload class="button expanded">
-</form>
+<h4><strong>ALTOCUMULUS</strong></h4>
+<div class="callout grid-x">
+  <p>A tool for generating “word clouds” from text that you provide. The clouds give greater prominence to words that
+    appear more frequently in the source text.</p>
+  <form method=post enctype=multipart/form-data class="cell large-6">
+    <label for="fileUpload" class="label" style="margin: 1em;">.txt only</label>
+    <input type=file id="fileUpload" name=file required>
+    <input type=submit value=Upload class="button expanded" disabled>
+  </form>
+  <div class="cell large-6">
+    Or choose an RSS source<br>
+    <a href="/ewn"><button class="alert button">EWN News</button></a>
+    <a href="/news24"><button class="alert button">News 24</button></a>
+    <a href="/bbc"><button class="alert button">BBC News</button></a>
+  </div>
 </div>
-
-</div>
-    {% endblock %}
+{% endblock %}

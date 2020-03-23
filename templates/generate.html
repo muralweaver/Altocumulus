@@ -1,0 +1,20 @@
+
+{% extends "layout.html" %}
+{% block title %}ABOUT{% endblock %} {% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+        <div class="grid-x">
+        {% for article in articles %}
+              <div class="card cell grid-margin-x" style="width: 300px;margin:1em;">
+              <div class="card-divider">
+                Your result:
+              </div>
+              <img src="data:image/png;base64,{{article}}">
+              <div class="card-section">
+                <h6>Most frequent word: </h6>
+              </div>
+            </div>
+        {% endfor %}
+        </div
+    {% endblock %}
