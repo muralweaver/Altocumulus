@@ -21,9 +21,7 @@
               <ul class="dropdown menu" data-dropdown-menu>
                 {% if current_user.is_authenticated %}
                 <li class="">
-                  <a href="{{ url_for('main.profile') }}" class="navbar-item">
-                      More Features
-                  </a>
+                  <a href="{{ url_for('main.profile') }}" class="navbar-item">More Features</a>
                 </li>
                 {% endif %}
                 <li class="">
@@ -45,7 +43,7 @@
         <div id="content" class="grid-container">{% block content %}{% endblock %}</div>
     </main>
     <footer class="grid-container footer">
-        {% block footer %}Altocumulus v1.0.1 {% endblock %}
+        {% block footer %}Altocumulus v1.9.1 {% endblock %}
     </footer>
 </body>
 </html>
