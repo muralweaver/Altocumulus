@@ -1,1 +1,1 @@
-web: gunicorn altocumulus:app
+web: gunicorn altocumulus:
