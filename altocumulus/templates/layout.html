@@ -5,35 +5,35 @@
     {% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.4.3/dist/css/foundation.min.css"
-        integrity="sha256-GSio8qamaXapM8Fq9JYdGNTvk/dgs+cMLgPeevOYEx0= sha384-wAweiGTn38CY2DSwAaEffed6iMeflc0FMiuptanbN4J+ib+342gKGpvYRWubPd/+ sha512-QHEb6jOC8SaGTmYmGU19u2FhIfeG+t/hSacIWPpDzOp5yygnthL3JwnilM7LM1dOAbJv62R+/FICfsrKUqv4Gg=="
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='foundation.css') }}">
     <title>{% block title %}{% endblock %} - ALTOCUMULUS </title>
     {% endblock %}
 </head>
 
 <body>
     <header class="" style="z-index: 1;position: relative;">
-        <div class="mobile-nav-bar title-bar">
-            <div class="title-bar-left">
+        <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
+            <div class="title-bar-title">ALTOCUMULUS</div>
+          </div>
+          
+          <div class="top-bar" id="example-menu">
+            <div class="top-bar-left">
+              <ul class="dropdown menu" data-dropdown-menu>
+                <li class="">
+                  <a  href="{{ url_for('about.aboutPage') }}">About</a>
+                </li>
+                <li class="title-bar-right"><a  href="{{ url_for('auth.signup') }}">Register</a></li>
+                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+              </ul>
             </div>
-            <div class="title-bar-center">
-                <a href="/"><span class="title-bar-text">Altocumulus v1.0.1</span></a>
-            </div>
-            <div class="title-bar-right">
-                <a href="/about"><span class="title-bar-text">About</span></a>
-            </div>
-        </div>
+
+          </div>        
     </header>
     <main>
         <div id="content" class="grid-container">{% block content %}{% endblock %}</div>
     </main>
     <footer class="grid-container footer">
-        {% block footer %}Wordcloud{% endblock %}
+        {% block footer %}Altocumulus v1.0.1 {% endblock %}
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.4.3/dist/js/foundation.min.js"
-    integrity="sha256-mRYlCu5EG+ouD07WxLF8v4ZAZYCA6WrmdIXyn1Bv9Vk= sha384-KzKofw4qqetd3kvuQ5AdapWPqV1ZI+CnfyfEwZQgPk8poOLWaabfgJOfmW7uI+AV sha512-0gHfaMkY+Do568TgjJC2iMAV0dQlY4NqbeZ4pr9lVUTXQzKu8qceyd6wg/3Uql9qA2+3X5NHv3IMb05wb387rA=="
-    crossorigin="anonymous"></script>
 </body>
 </html>
