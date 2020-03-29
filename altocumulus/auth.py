@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, url_for, request, redirect, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
 from . import db
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login')
@@ -49,5 +49,7 @@ def signup_post():
 
 
 @auth.route('/logout')
+@login_required
 def logout():
-    return 'Logout'
+    logout_user()
+    return redirect(url_for('main.index'))

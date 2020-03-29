@@ -13,17 +13,29 @@
 <body>
     <header class="" style="z-index: 1;position: relative;">
         <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
-            <div class="title-bar-title">ALTOCUMULUS</div>
+            <div class="title-bar-title"><a href="{{ url_for('main.index') }}">ALTOCUMULUS</a></div>
           </div>
           
           <div class="top-bar" id="example-menu">
             <div class="top-bar-left">
               <ul class="dropdown menu" data-dropdown-menu>
+                {% if current_user.is_authenticated %}
+                <li class="">
+                  <a href="{{ url_for('main.profile') }}" class="navbar-item">
+                      More Features
+                  </a>
+                </li>
+                {% endif %}
                 <li class="">
                   <a  href="{{ url_for('about.aboutPage') }}">About</a>
                 </li>
+                {% if not current_user.is_authenticated %}
                 <li class="title-bar-right"><a  href="{{ url_for('auth.signup') }}">Register</a></li>
                 <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                {% endif %}
+                {% if current_user.is_authenticated %}
+                <li class="title-bar-right"><a href="{{ url_for('auth.logout') }}">Logout  {{ name }}!</a></li>
+                {% endif %}
               </ul>
             </div>
 
