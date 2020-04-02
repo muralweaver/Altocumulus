@@ -1,1 +1,1 @@
-web: gunicorn altocumulus:create_app
+web: gunicorn wsgi:app
