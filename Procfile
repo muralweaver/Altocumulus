@@ -1,1 +1,1 @@
-web: gunicorn altocumulus:__init__.py
+web: gunicorn wsgi:app
