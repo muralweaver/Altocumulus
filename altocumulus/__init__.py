@@ -10,7 +10,7 @@ from flask_login import LoginManager
 #     sample_rate=0.4,
 #     max_breadcrumbs=25
 # )
-from .wsgi import app
+
 
 db = SQLAlchemy()
 def create_app():
