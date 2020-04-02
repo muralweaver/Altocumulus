@@ -11,9 +11,7 @@ from flask_login import LoginManager
 #     max_breadcrumbs=25
 # )
 
-
 db = SQLAlchemy()
-# def create_app():
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '47LWxND4o83j4K4iuopO'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
@@ -49,5 +47,3 @@ app.register_blueprint(feeds_blueprint)
 @app.errorhandler(404)
 def not_found(error):
     return render_template('error.html'), 404
-
-    # return app
