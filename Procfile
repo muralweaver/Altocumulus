@@ -1,1 +1,1 @@
-web: gunicorn altocumulus:
+web: gunicorn altocumulus:__init__.py
