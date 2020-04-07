@@ -1,31 +1,30 @@
-
 {% extends "layout.html" %}
 {% block content %}
 {% with messages = get_flashed_messages() %}
 {% if messages %}
-    <div class="callout alert small">
-        {{ messages[0] }}
-    </div>
+<div class="callout alert small">
+    {{ messages[0] }}
+</div>
 {% endif %}
 {% endwith %}
 <form method="POST" action="/login">
     <div class="grid-container">
         <h1 class="title">Login</h1>
-      <div class="grid-x grid-padding-x">
-        <div class="medium-6 cell">
-          <label>Email
-            <input type="email" name="email" placeholder="Email" autofocus="" required>
-          </label>
+        <div class="grid-x grid-padding-x">
+            <div class="medium-6 cell">
+                <label>Email
+                    <input type="email" name="email" placeholder="Email" autofocus="" required>
+                </label>
+            </div>
+            <div class="medium-6 cell">
+                <label>Password
+                    <input type="password" name="password" placeholder="Password" required>
+                </label>
+            </div>
         </div>
-        <div class="medium-6 cell">
-          <label>Password
-            <input type="password" name="password" placeholder="Password" required>
-          </label>
+        <div class="input-button">
+            <input type="submit" class="button" value="Submit">
         </div>
     </div>
-    <div class="input-button">
-        <input type="submit" class="button" value="Submit">
-    </div>
-    </div>
-  </form>
+</form>
 {% endblock %}

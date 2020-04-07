@@ -9,6 +9,7 @@ import base64
 
 feeds = Blueprint('feeds', __name__)
 
+
 def parse_article(article_url):
     print("Downloading {}".format(article_url))
     r = requests.get(article_url)
@@ -16,8 +17,9 @@ def parse_article(article_url):
     ps = soup.find_all('p')
     text = "\n".join(p.get_text() for p in ps)
     return text
-    
-#REFACTOR INTO ONE
+
+
+# REFACTOR INTO ONE
 @feeds.route("/news24")
 def news24():
     FEED = "http://feeds.news24.com/articles/News24/TopStories/rss"
@@ -30,6 +32,7 @@ def news24():
         cloud = get_wordcloud(text)
         clouds.append(cloud)
     return render_template('generate.html', articles=clouds)
+
 
 def get_wordcloud(text):
     pil_img = WordCloud().generate(text=text).to_image()

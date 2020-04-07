@@ -14,7 +14,8 @@ upload.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 def allowed_file(filename):
     return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @upload.route("/upload", methods=['GET', 'POST'])
 def uploader():
@@ -41,7 +42,7 @@ def uploader():
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    text = '/uploads/{file}'.format(file = filename), 'r+'
+    text = '/uploads/{file}'.format(file=filename), 'r+'
     content = text[0].read()
     print(content)
     return send_from_directory(upload.config['UPLOAD_FOLDER'], filename)
