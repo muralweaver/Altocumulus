@@ -2,6 +2,7 @@ from flask import Blueprint, make_response
 
 graphs = Blueprint('graphs', __name__)
 
+
 @graphs.route("/simple.png")
 def testMatPlot():
     import datetime
