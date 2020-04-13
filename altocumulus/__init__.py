@@ -1,4 +1,5 @@
 # import sentry_sdk
+import os
 from flask import Flask, render_template
 # from sentry_sdk.integrations.flask import FlaskIntegration
 from flask_sqlalchemy import SQLAlchemy
@@ -14,7 +15,7 @@ from flask_login import LoginManager
 
 db = SQLAlchemy()
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '47LWxND4o83j4K4iuopO'
+os.environ.get("SECRET_KEY")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 db.init_app(app)
 login_manager = LoginManager()
