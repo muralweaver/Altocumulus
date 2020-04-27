@@ -34,10 +34,6 @@ from altocumulus.main import main as main_blueprint
 
 app.register_blueprint(main_blueprint)
 
-from altocumulus.about import about as about_blueprint
-
-app.register_blueprint(about_blueprint)
-
 from altocumulus.auth import auth as auth_blueprint
 
 app.register_blueprint(auth_blueprint)
