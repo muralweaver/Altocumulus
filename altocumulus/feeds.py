@@ -1,13 +1,18 @@
 import feedparser
 import requests
 
-from flask import Blueprint, make_response, render_template
+from flask import Blueprint, make_response, render_template, request
 from wordcloud import WordCloud
 from bs4 import BeautifulSoup
 import io
 import base64
 
 feeds = Blueprint('feeds', __name__)
+default_sources = ["http://feeds.news24.com/articles/News24/TopStories/rss",
+                   "http://feeds.bbci.co.uk/news/world/rss.xml",
+                   "https://www.vice.com/en_us/rss",
+                   "https://www.aljazeera.com/xml/rss/all.xml"
+                   ]
 
 
 def parse_article(article_url):
@@ -20,14 +25,22 @@ def parse_article(article_url):
 
 
 # REFACTOR INTO ONE
-@feeds.route("/news24")
-def news24():
-    FEED = "http://feeds.news24.com/articles/News24/TopStories/rss"
-    # FEED = input
-    LIMIT = 6
-    feed = feedparser.parse(FEED)
+@feeds.route("/", methods=['POST', 'GET'])
+def getFeed():
+    if request.method == 'POST':
+        try:
+            result = request.form.get('feed').lower()
+            for i in default_sources:
+                if result in i:
+                    feed_path = i
+        except Exception as e:
+            print(e)
+
+    feed = feed_path
+    limit = 6
+    feed = feedparser.parse(feed)
     clouds = []
-    for article in feed['entries'][:LIMIT]:
+    for article in feed['entries'][:limit]:
         text = parse_article(article['link'])
         cloud = get_wordcloud(text)
         clouds.append(cloud)

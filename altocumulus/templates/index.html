@@ -9,11 +9,14 @@
         appear more frequently in the source text.</p>
     <div class="cell large-6">
         choose an RSS source<br>
-        <a href="/news24">
-            <button class="alert button">News 24</button>
-        </a>
-        <button type="button" class="button warning" disabled>Disabled</button>
-        <button type="button" class="button secondary" disabled>Disabled</button>
+        <form method="post">
+            <a href="{{ url_for('feeds.getFeed') }}">
+                <input class="button" name="feed" type="submit" class="button" value="News24">
+                <input class="button alert" name="feed" type="submit" class="button" value="BBC">
+                <input style="background: #000;color: #fff;" class="button" name="feed" type="submit" class="button" value="Vice">
+                <input class="button warning" name="feed" type="submit" class="button" value="Aljazeera">
+            </a>
+        </form>
     </div>
     <div class="cell large-1">
         <img class="thumbnail"
@@ -24,5 +27,5 @@
                 alt="wordcloud"></a>
     </div>
 </div>
-Want to see more? Login with demo demo or register.
+<del>Login with demo demo or register.</del>
 {% endblock %}
