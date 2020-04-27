@@ -24,15 +24,12 @@
                     <a href="{{ url_for('main.profile') }}" class="navbar-item">More Features</a>
                 </li>
                 {% endif %}
-                <li class="">
-                    <a href="{{ url_for('about.aboutPage') }}">About</a>
-                </li>
                 {% if not current_user.is_authenticated %}
-                <li class="title-bar-right"><a href="{{ url_for('auth.signup') }}">Register</a></li>
-                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                <li onclick="return false" class="title-bar-right"><a href="{{ url_for('auth.signup') }}">Register</a></li>
+                <li onclick="return false"><a href="{{ url_for('auth.login') }}">Login</a></li>
                 {% endif %}
                 {% if current_user.is_authenticated %}
-                <li class="title-bar-right"><a href="{{ url_for('auth.logout') }}">Logout {{ name }}!</a></li>
+                <li onclick="return false" class="title-bar-right"><a href="{{ url_for('auth.logout') }}">Logout {{ name }}!</a></li>
                 {% endif %}
             </ul>
         </div>
@@ -43,7 +40,7 @@
     <div id="content" class="grid-container">{% block content %}{% endblock %}</div>
 </main>
 <footer class="grid-container footer">
-    {% block footer %}Altocumulus v1.9.1 {% endblock %}
+    {% block footer %}Altocumulus 2020{% endblock %}
 </footer>
 </body>
 </html>
