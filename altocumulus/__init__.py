@@ -4,6 +4,13 @@ from flask import Flask, render_template
 # from sentry_sdk.integrations.flask import FlaskIntegration
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from .models import User
+from altocumulus.main import main as main_blueprint
+from altocumulus.auth import auth as auth_blueprint
+from altocumulus.graphs import graphs as graphs_blueprint
+from altocumulus.feeds import feeds as feeds_blueprint
+from altocumulus.feeds import feeds as feeds_blueprint
+from altocumulus.movie_suggest import movie_suggest as movie_blueprint
 
 # To configure the SDK, initialize it with the integration before or after your app has been initialized:
 # sentry_sdk.init(
@@ -21,7 +28,7 @@ db.init_app(app)
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
-from .models import User
+
 
 
 @login_manager.user_loader
@@ -30,21 +37,17 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-from altocumulus.main import main as main_blueprint
+# PEP 8: module level import not at top of file
 
 app.register_blueprint(main_blueprint)
 
-from altocumulus.auth import auth as auth_blueprint
-
 app.register_blueprint(auth_blueprint)
-
-from altocumulus.graphs import graphs as graphs_blueprint
 
 app.register_blueprint(graphs_blueprint)
 
-from altocumulus.feeds import feeds as feeds_blueprint
-
 app.register_blueprint(feeds_blueprint)
+
+app.register_blueprint(movie_blueprint)
 
 
 # from altocumulus.upload import upload as upload_blueprint
