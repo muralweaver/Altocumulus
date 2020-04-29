@@ -46,10 +46,6 @@ from altocumulus.feeds import feeds as feeds_blueprint
 
 app.register_blueprint(feeds_blueprint)
 
-from altocumulus.movie_suggest import movie_suggest as movie_blueprint
-
-app.register_blueprint(movie_blueprint)
-
 
 # from altocumulus.upload import upload as upload_blueprint
 # app.register_blueprint(upload_blueprint)
