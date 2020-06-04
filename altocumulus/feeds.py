@@ -40,11 +40,14 @@ def getFeed():
     limit = 6
     feed = feedparser.parse(feed)
     clouds = []
+    titles = []
     for article in feed['entries'][:limit]:
         text = parse_article(article['link'])
+        title = article['title']
         cloud = get_wordcloud(text)
         clouds.append(cloud)
-    return render_template('generate.html', articles=clouds)
+        titles.append(title)
+    return render_template('generate.html', articles=clouds, article_titles=titles)
 
 
 def get_wordcloud(text):
