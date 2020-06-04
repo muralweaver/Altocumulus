@@ -7,13 +7,27 @@
     {% for article in articles %}
     <div class="card cell grid-margin-x" style="width: 300px;margin:1em;">
         <div class="card-divider">
-<!--            Your result:-->
         </div>
         <img src="data:image/png;base64,{{article}}">
         <div class="card-section">
-<!--            <h6>Most frequent word: </h6>-->
         </div>
     </div>
     {% endfor %}
+    <table class="stack hover">
+        <thead>
+            <tr>
+                <th>List of Articles</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article_title in article_titles %}
+            <tr>
+                <td>
+                    {{article_title}}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
